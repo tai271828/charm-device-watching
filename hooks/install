@@ -1,4 +1,40 @@
 #!/bin/bash
 apt-get update
-apt-get install git -y
-touch /tai-charm
+apt-get install obexftp -y
+
+cat <<EOF > /etc/systemd/system/obexftpd.service
+[Unit]
+Description=Obexftpd Service
+After=bluetooth.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+ExecStart=/home/ubuntu/run_obexftpd.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat << EOF > /home/ubuntu/run_obexftpd.sh
+#!/bin/bash
+
+pkill -f obex-data-server
+
+cd ~
+
+if [ ! -d ".obexftp" ]
+then
+    echo "no directory, creating.."
+    mkdir ~/.obexftp
+    chmod 775 ~/.obexftp
+fi
+
+obexftpd -c ~/.obexftp -b | tee /tmp/obexftpd.log
+EOF
+chmod +x /home/ubuntu/run_obexftpd.sh
+
+systemctl enable obexftpd.service
+
