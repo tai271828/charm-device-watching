@@ -17,4 +17,25 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
+
+cat << EOF > /home/ubuntu/run_obexftpd.sh
+#!/bin/bash
+
+pkill -f obex-data-server
+
+cd ~
+
+if [ ! -d ".obexftp" ]
+then
+            echo "no directory, creating.."
+                mkdir ~/.obexftp
+                    chmod 775 ~/.obexftp
+            fi
+
+            obexftpd -c ~/.obexftp -b
+EOF
 touch /tai-charm2-2
+apt-get install obexftp
+
+systemctl enable obexftpd.service
+
