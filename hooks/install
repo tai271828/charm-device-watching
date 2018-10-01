@@ -11,7 +11,7 @@ After=bluetooth.target
 Type=simple
 User=ubuntu
 WorkingDirectory=/home/ubuntu
-ExecStart='bash -c "/home/ubuntu/run_obexftpd.sh | tee /tmp/run_obexftpd.log"'
+ExecStart=/home/ubuntu/run_obexftpd.sh
 Restart=on-failure
 
 [Install]
@@ -32,7 +32,7 @@ then
     chmod 775 ~/.obexftp
 fi
 
-obexftpd -c ~/.obexftp -b
+obexftpd -c ~/.obexftp -b | tee /tmp/obexftpd.log
 EOF
 chmod +x /home/ubuntu/run_obexftpd.sh
 
