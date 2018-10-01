@@ -1,4 +1,20 @@
 #!/bin/bash
 apt-get update
 apt-get install git -y
-touch /tai-charm
+touch /tai-charm2-1
+cat <<EOF > /etc/systemd/system/obexftpd.service
+[Unit]
+Description=Obexftpd Service
+After=bluetooth.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+ExecStart=/home/ubuntu/run_obexftpd.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+touch /tai-charm2-2
