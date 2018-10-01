@@ -1,10 +1,15 @@
 name: device-watching
-summary: <Fill in summary here>
+summary: An obexftp server to scan and be scanned.
 maintainer: tai271828 <taihsiang.ho@canonical.com>
 description: |
-  <Multi-line description here>
+  An obexftp server to scan and be scanned. It is useful to build a test lab
+  with checkbox.
 tags:
   # Replace "misc" with one or more whitelisted tags from this list:
   # https://jujucharms.com/docs/stable/authors-charm-metadata
-  - misc
+  - automation
+  - certification
+  - checkbox
+  - ops
+  - monitoring
 subordinate: false
