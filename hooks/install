@@ -1,6 +1,6 @@
 #!/bin/bash
 apt-get update
-apt-get install obexftp -y
+apt-get install obexftp bluez -y
 
 cat <<EOF > /etc/systemd/system/obexftpd.service
 [Unit]
