@@ -32,9 +32,16 @@ then
     chmod 775 ~/.obexftp
 fi
 
-obexftpd -c ~/.obexftp -b | tee /tmp/obexftpd.log
+sudo hciconfig hci0 up
+sudo hciconfig hci0 piscan
+sudo obexftpd -c ~/.obexftp -b | tee /tmp/obexftpd.log
 EOF
 chmod +x /home/ubuntu/run_obexftpd.sh
+
+# Need this to regisger SDP service
+sed -ie 's/ExecStart=\/usr\/lib\/bluetooth\/bluetoothd/ExecStart=\/usr\/lib\/bluetooth\/bluetoothd\ --compat/g' /lib/systemd/system/bluetooth.service
+systemctl daemon-reload
+systemctl restart bluetooth.service
 
 systemctl enable obexftpd.service
 
